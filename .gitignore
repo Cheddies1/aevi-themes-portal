@@ -34,6 +34,7 @@ htmlcov/
 
 # App data
 themes/
+.portal-data/
 
 # Temp / working files
 temp/

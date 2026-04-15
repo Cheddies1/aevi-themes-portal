@@ -38,6 +38,7 @@ uvicorn app:app --reload
 ## Configuration
 
 - `THEMES_DIR`: override the storage directory. Default is `./themes`
+- `PORTAL_DATA_DIR`: override the internal portal settings/metadata directory. Default is `./.portal-data`
 - `MAX_LOGO_BYTES`: maximum allowed PNG size in bytes. Default is `1048576`
 
 ## API
@@ -49,6 +50,17 @@ uvicorn app:app --reload
 - `POST /themes` creates a theme from multipart form-data
 - `PUT /themes/{fileName}` updates a theme from multipart form-data
 - `DELETE /themes/{fileName}` removes a theme
+
+Theme ordering is controlled globally and affects:
+- the Saved Themes UI
+- `GET /themes`
+- `GET /themes/configs`
+
+Supported order modes:
+- `name_asc`
+- `created_desc`
+- `updated_desc`
+- `manual`
 
 Example `GET /themes` item:
 
@@ -84,6 +96,8 @@ Update requests may include `removeCurrentLogo=true` to explicitly remove an exi
 
 ## Notes
 
+- Internal ordering state is stored separately from the theme JSON files under `PORTAL_DATA_DIR`, so app-facing payloads remain unchanged.
+- In manual mode, the UI exposes `Move up` and `Move down` controls and new themes append to the end.
 - Colour input accepts `#RRGGBB` and is converted to a signed 32-bit ARGB integer with full opacity.
 - If a custom logo is uploaded, the JSON omits `useDefaultLogo` and `colorDefaultLogo`.
 - If no custom logo is uploaded, `useDefaultLogo` is always written and `colorDefaultLogo` is only written when `useDefaultLogo` is true.

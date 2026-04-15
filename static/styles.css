@@ -40,7 +40,7 @@ body {
 .hero-brand {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 28px;
 }
 
 .hero h1 {
@@ -50,7 +50,7 @@ body {
 }
 
 .aevi-logo {
-  height: 28px;
+  height: 130px;
   width: auto;
   display: block;
 }
@@ -141,6 +141,10 @@ body {
 
 .panel-header {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
 }
 
 .panel-header h2 {
@@ -168,6 +172,7 @@ body {
 input[type="text"],
 input[type="file"],
 input[type="color"],
+select,
 button {
   width: 100%;
   border-radius: 8px;
@@ -263,6 +268,20 @@ button:hover {
   margin-left: 6px;
   font-family: Consolas, "Courier New", monospace;
   font-size: 0.88rem;
+}
+
+.sort-form {
+  min-width: 180px;
+}
+
+.sort-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.sort-form span {
+  font-size: 0.86rem;
+  color: var(--muted);
 }
 
 .theme-card {
@@ -380,15 +399,52 @@ button:hover {
 
   .hero {
     flex-direction: column;
-    align-items: start;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    padding-bottom: 14px;
   }
 
   .hero-brand {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-brand > div {
+    display: grid;
+    gap: 6px;
+    justify-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+  }
+
+  .aevi-logo {
+    height: 112px;
+  }
+
+  .eyebrow,
+  .lede {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
   }
 
   .theme-card-top {
     flex-direction: column;
+  }
+
+  .panel-header {
+    flex-direction: column;
+  }
+
+  .sort-form {
+    width: 100%;
   }
 }

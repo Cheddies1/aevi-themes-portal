@@ -19,6 +19,7 @@ Current scope:
 - serve raw theme JSON files
 - expose a lightweight metadata API
 - expose an app-facing config list endpoint
+- support global ordering across UI and list endpoints
 
 Out of scope:
 - auth
@@ -70,6 +71,8 @@ Important current API details:
 - `GET /themes` returns absolute theme URLs built from the incoming request
 - `GET /themes` also returns `lastModified` and `size`
 - `GET /themes/configs` returns the stored theme JSON objects exactly, with stable filename order and no metadata fields injected
+- global ordering modes are `name_asc`, `created_desc`, `updated_desc`, and `manual`
+- the active ordering mode affects the Saved Themes UI, `GET /themes`, and `GET /themes/configs`
 - create/update endpoints accept multipart form data
 - update flows may include `removeCurrentLogo=true` to explicitly remove an existing custom logo
 
@@ -78,11 +81,14 @@ UI behaviour already in place:
 - saved-theme cards show custom logo preview when present
 - saved-theme cards show `Default logo` or `No logo` when no custom logo exists
 - saved-theme cards include direct JSON link and clipboard copy action
+- main page includes a global theme order selector
+- manual mode exposes `Move up` and `Move down` controls
 - edit page includes explicit `Remove current logo`
 
 ## Storage
 - default storage is local filesystem under [themes](themes)
 - each theme is stored as `/themes/{slug}.json` on disk
+- portal ordering/settings metadata is stored under `.portal-data`
 - no database is used
 
 ## Branding

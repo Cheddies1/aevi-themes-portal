@@ -39,8 +39,22 @@
 
   <section class="panel list-panel">
     <div class="panel-header">
-      <h2>Saved Themes</h2>
-      <p>{{ themes|length }} total</p>
+      <div>
+        <h2>Saved Themes</h2>
+        <p>{{ themes|length }} total</p>
+      </div>
+      <form action="/ui/settings/sort-mode" method="post" class="sort-form">
+        <label>
+          <span>Theme order</span>
+          <select name="sortMode" onchange="this.form.submit()">
+            {% for option in sort_mode_options %}
+            <option value="{{ option.value }}" {% if option.value == sort_mode %}selected{% endif %}>
+              {{ option.label }}
+            </option>
+            {% endfor %}
+          </select>
+        </label>
+      </form>
     </div>
     <p class="integration-note">
       Technical endpoints:
@@ -82,6 +96,14 @@
           >
             Copy URL
           </button>
+          {% if sort_mode == "manual" %}
+          <form action="/ui/themes/{{ theme.fileName }}/move-up" method="post">
+            <button type="submit" class="secondary-button">Move up</button>
+          </form>
+          <form action="/ui/themes/{{ theme.fileName }}/move-down" method="post">
+            <button type="submit" class="secondary-button">Move down</button>
+          </form>
+          {% endif %}
           <form action="/ui/themes/{{ theme.fileName }}/delete" method="post">
             <button type="submit" class="danger-button">Delete</button>
           </form>
