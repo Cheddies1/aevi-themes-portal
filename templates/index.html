@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="layout">
+  <section class="panel form-panel">
+    <div class="panel-header">
+      <h2>Create Theme</h2>
+      <p>PNG logos only, up to {{ max_logo_mb }}MB.</p>
+    </div>
+    {% if error %}
+    <div class="alert">{{ error }}</div>
+    {% endif %}
+    <form action="/ui/themes" method="post" enctype="multipart/form-data" class="theme-form">
+      <label>
+        <span>Name</span>
+        <input type="text" name="name" required value="{{ form.name }}">
+      </label>
+      <label>
+        <span>Colour</span>
+        <div class="color-input-row">
+          <input type="color" name="color" value="{{ form.color }}">
+          <input type="text" value="{{ form.color }}" pattern="#[0-9A-Fa-f]{6}" oninput="this.form.color.value = this.value">
+        </div>
+      </label>
+      <label>
+        <span>Logo (PNG)</span>
+        <input type="file" name="logo" accept="image/png">
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="useDefaultLogo" {% if form.use_default_logo %}checked{% endif %}>
+        <span>Use default logo</span>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="colorDefaultLogo" {% if form.color_default_logo %}checked{% endif %}>
+        <span>Colour default logo</span>
+      </label>
+      <button type="submit">Create Theme</button>
+    </form>
+  </section>
+
+  <section class="panel list-panel">
+    <div class="panel-header">
+      <h2>Saved Themes</h2>
+      <p>{{ themes|length }} total</p>
+    </div>
+    <p class="integration-note">
+      Technical endpoints:
+      <a href="/themes" target="_blank" rel="noreferrer">metadata</a>
+      <span>/themes</span>
+      <a href="/themes/configs" target="_blank" rel="noreferrer">app configs</a>
+      <span>/themes/configs</span>
+    </p>
+    {% if themes %}
+    <div class="theme-grid">
+      {% for theme in themes %}
+      <article class="theme-card">
+        <div class="theme-card-top">
+          <div class="theme-preview">
+            <div class="swatch" style="background: {{ theme.color }}"></div>
+            <div class="preview-meta">
+              <span class="preview-label">Primary colour</span>
+              <code>{{ theme.color }}</code>
+            </div>
+          </div>
+          {% if theme.logo_data_url %}
+          <img src="{{ theme.logo_data_url }}" alt="{{ theme.name }} logo preview" class="logo-preview">
+          {% elif theme.use_default_logo %}
+          <div class="logo-placeholder">Default logo</div>
+          {% else %}
+          <div class="logo-placeholder">No logo</div>
+          {% endif %}
+        </div>
+        <h3>{{ theme.name }}</h3>
+        <p class="file-label">{{ theme.fileName }}</p>
+        <p class="theme-meta">Updated {{ theme.lastModified }} · {{ theme.size }} bytes</p>
+        <div class="card-actions">
+          <a href="/ui/themes/{{ theme.fileName }}/edit">Edit</a>
+          <a href="{{ theme.url }}" target="_blank" rel="noreferrer">JSON</a>
+          <button
+            type="button"
+            class="secondary-button copy-url-button"
+            data-copy-url="{{ theme.url }}"
+          >
+            Copy URL
+          </button>
+          <form action="/ui/themes/{{ theme.fileName }}/delete" method="post">
+            <button type="submit" class="danger-button">Delete</button>
+          </form>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">No themes saved yet.</div>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}

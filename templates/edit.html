@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="single-panel">
+  <section class="panel form-panel">
+    <div class="panel-header">
+      <h2>Edit Theme</h2>
+      <p>{{ form.file_name }}</p>
+    </div>
+    {% if error %}
+    <div class="alert">{{ error }}</div>
+    {% endif %}
+    <form action="/ui/themes/{{ form.file_name }}" method="post" enctype="multipart/form-data" class="theme-form">
+      <label>
+        <span>Name</span>
+        <input type="text" name="name" required value="{{ form.name }}">
+      </label>
+      <label>
+        <span>Colour</span>
+        <div class="color-input-row">
+          <input type="color" name="color" value="{{ form.color }}">
+          <input type="text" value="{{ form.color }}" pattern="#[0-9A-Fa-f]{6}" oninput="this.form.color.value = this.value">
+        </div>
+      </label>
+      <label>
+        <span>Replace Logo (PNG)</span>
+        <input type="file" name="logo" accept="image/png">
+      </label>
+      {% if form.logo_data_url %}
+      <div class="current-logo">
+        <span>Current logo</span>
+        <img src="{{ form.logo_data_url }}" alt="{{ form.name }} logo preview" class="logo-preview">
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" name="removeCurrentLogo" {% if form.remove_current_logo %}checked{% endif %}>
+        <span>Remove current logo</span>
+      </label>
+      {% endif %}
+      <label class="checkbox-row">
+        <input type="checkbox" name="useDefaultLogo" {% if form.use_default_logo %}checked{% endif %}>
+        <span>Use default logo</span>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="colorDefaultLogo" {% if form.color_default_logo %}checked{% endif %}>
+        <span>Colour default logo</span>
+      </label>
+      <button type="submit">Save Changes</button>
+    </form>
+    <aside class="preview-panel">
+      <h3>Preview</h3>
+      <div class="preview-card">
+        <div class="theme-preview">
+          <div class="swatch" style="background: {{ form.color }}"></div>
+          <div class="preview-meta">
+            <span class="preview-label">Theme colour</span>
+            <code>{{ form.color }}</code>
+          </div>
+        </div>
+        {% if form.logo_data_url %}
+        <img src="{{ form.logo_data_url }}" alt="{{ form.name }} logo preview" class="logo-preview">
+        {% elif form.use_default_logo %}
+        <div class="logo-placeholder">Default logo</div>
+        {% else %}
+        <div class="logo-placeholder">No logo</div>
+        {% endif %}
+        <div class="preview-details">
+          <strong>{{ form.name }}</strong>
+          <span>{{ form.file_name }}</span>
+          <a href="{{ form.theme_url }}" target="_blank" rel="noreferrer">Open JSON</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+{% endblock %}

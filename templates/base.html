@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or "Aevi Theme Portal" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-brand">
+        {% if aevi_logo_path %}
+        <img src="{{ aevi_logo_path }}" alt="Aevi" class="aevi-logo">
+        {% else %}
+        <div class="logo-placeholder-shell">
+          <span class="logo-placeholder-label">Logo placeholder</span>
+          <code>static/aevi-logo.svg</code>
+        </div>
+        {% endif %}
+        <div>
+          <p class="eyebrow">Aevi Demo Tool</p>
+          <h1>Aevi Theme Portal</h1>
+          <p class="lede">Create and serve theme JSON files without touching raw config.</p>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a class="secondary-link" href="/">All Themes</a>
+      </div>
+    </header>
+    {% block content %}{% endblock %}
+  </div>
+  <script src="{{ url_for('static', path='/app.js') }}"></script>
+</body>
+</html>
