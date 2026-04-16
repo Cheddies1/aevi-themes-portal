@@ -23,7 +23,11 @@
       </label>
       <div class="form-field">
         <span class="field-label">Replace Logo (PNG)</span>
-        <input type="file" name="logo" accept="image/png">
+        <input type="file" name="logo" accept="image/png" class="logo-input">
+        <div class="logo-dropzone" tabindex="0">
+          <span>Upload, paste, or drag a PNG logo here</span>
+        </div>
+        <p class="logo-upload-status" aria-live="polite"></p>
         <button type="button" class="secondary-button logo-search-button">Find logo (Google Images)</button>
       </div>
       {% if form.logo_data_url %}

@@ -168,6 +168,38 @@ body {
   font-weight: 500;
 }
 
+.logo-dropzone {
+  display: grid;
+  place-items: center;
+  min-height: 78px;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--muted);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.logo-dropzone:focus-visible,
+.logo-dropzone.is-active {
+  outline: none;
+  border-color: var(--accent-deep);
+  background: rgba(51, 204, 107, 0.08);
+}
+
+.logo-upload-status {
+  min-height: 1.2em;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.logo-upload-status.is-error {
+  color: var(--danger);
+}
+
 .color-input-row {
   display: grid;
   grid-template-columns: 72px 1fr;
