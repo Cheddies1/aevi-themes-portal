@@ -157,7 +157,7 @@ body {
   gap: 16px;
 }
 
-.theme-form label,
+.theme-form label:not(.checkbox-row),
 .form-field,
 .current-logo {
   display: grid;
