@@ -21,10 +21,11 @@
           <input type="text" value="{{ form.color }}" pattern="#[0-9A-Fa-f]{6}" oninput="this.form.color.value = this.value">
         </div>
       </label>
-      <label>
-        <span>Logo (PNG)</span>
+      <div class="form-field">
+        <span class="field-label">Logo (PNG)</span>
         <input type="file" name="logo" accept="image/png">
-      </label>
+        <button type="button" class="secondary-button logo-search-button">Find logo (Google Images)</button>
+      </div>
       <label class="checkbox-row">
         <input type="checkbox" name="useDefaultLogo" {% if form.use_default_logo %}checked{% endif %}>
         <span>Use default logo</span>
